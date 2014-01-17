@@ -71,6 +71,9 @@ def parse_args():
   parser.add_option("--spark-git-repo", 
       default="https://github.com/apache/incubator-spark",
       help="Github repo from which to checkout supplied commit hash")
+  parser.add_option("--spark-archive", default="",
+      help="URL of a custom prebuilt Spark distribution. Overrides "
+           "--spark-version and --spark-git-repo")
   parser.add_option("--hadoop-major-version", default="1",
       help="Major version of Hadoop (default: 1)")
   parser.add_option("-D", metavar="[ADDRESS:]PORT", dest="proxy_port", 
@@ -499,7 +502,12 @@ def deploy_files(conn, root_dir, opts, master_nodes, slave_nodes, modules):
 
   cluster_url = "%s:7077" % active_master
 
-  if "." in opts.spark_version:
+  if opts.spark_archive:
+    # Custom pre-built spark
+    spark_v = opts.spark_archive
+    shark_v = ""
+    modules = filter(lambda x: x != "shark", modules)
+  elif "." in opts.spark_version:
     # Pre-built spark & shark deploy
     (spark_v, shark_v) = get_spark_shark_version(opts)
   else:
