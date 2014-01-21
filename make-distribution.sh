@@ -98,6 +98,7 @@ mkdir "$DISTDIR"/conf
 cp "$FWDIR"/conf/*.template "$DISTDIR"/conf
 cp -r "$FWDIR/bin" "$DISTDIR"
 cp -r "$FWDIR/python" "$DISTDIR"
+cp -r "$FWDIR/ec2" "$DISTDIR"
 cp "$FWDIR/spark-class" "$DISTDIR"
 cp "$FWDIR/spark-shell" "$DISTDIR"
 cp "$FWDIR/spark-executor" "$DISTDIR"
